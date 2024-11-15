@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,11 +26,13 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div className='flex mr-2 space-x-2'>
+                    <Link to="/login">
                     <div className="flex text-white items-center font-bold text-sm">
                         <span>Name</span>
                         <span>&gt;</span>
                         <img src={require("../assets/account-32.png")} alt="" className='w-9' />
                     </div>
+                    </Link>
                     <div>
                         <img src={require("../assets/cart.png")} alt="" className='w-9' />
                     </div>
