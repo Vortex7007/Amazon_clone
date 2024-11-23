@@ -7,10 +7,15 @@ const User = require('../models/User')
 
 router.post('/createuser',async(req,res)=>{
     try {
-        let user = await User.create({
-            name : req.body.name,
-            password : req.body.password,
-            email : req.body.email
+        let user = await User.findOne({ email: req.body.email });
+        if (user) {
+            return res.status(400).json({error: "sorry a user with this email already exists" });
+        }
+        const secPass = await bcrypt.hash(req.body.password, 10);
+        user = await User.create({
+            name: req.body.name,
+            password: secPass,
+            email: req.body.email
         })
         res.send(user);
     } catch (error) {
