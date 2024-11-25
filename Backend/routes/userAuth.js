@@ -5,6 +5,7 @@ const User = require('../models/User')
 
 //Available Routes
 
+//create a new user
 router.post('/createuser',async(req,res)=>{
     try {
         let user = await User.findOne({ email: req.body.email });
@@ -24,5 +25,21 @@ router.post('/createuser',async(req,res)=>{
     }
 
 })
+
+//check if the user exists or not
+router.post('/checkuser', async(req, res)=>{
+    try{
+        let user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(400).json({error: "looks like you are new here please sign up to continue" });
+        }
+    }
+    catch(error){
+        console.error(error.message);
+        res.status(500).send("Some Error Occured");
+    }
+})
+
+//
 
 module.exports = router;
