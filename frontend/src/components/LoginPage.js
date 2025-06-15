@@ -8,7 +8,7 @@ function LoginPage() {
   const handleSubmit =async (e) => {
     e.preventDefault();
     // Handle login logic here
-      const response = await fetch("http://localhost:5000/api/auth/checkuser", {
+      const response = await fetch("https://amazon-clone-yfmi.onrender.com/api/auth/checkuser", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
