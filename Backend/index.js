@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require('cors');
 require("./db_conn");
 
-const app = express()
-const port = 5000
+const app = express();
+const port = process.env.PORT || 5000;
 
 //Middlewares
 app.use(express.json())

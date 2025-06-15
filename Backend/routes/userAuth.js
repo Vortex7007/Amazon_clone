@@ -31,7 +31,10 @@ router.post('/checkuser', async(req, res)=>{
     try{
         let user = await User.findOne({ email: req.body.email });
         if (!user) {
-            return res.status(400).json({error: "looks like you are new here please sign up to continue" });
+            return res.status(200).json({action : "signup" ,message: "looks like you are new here please sign up to continue" });
+        }
+        else{
+            return res.status(200).json({action : "login" , message: "give password" });
         }
     }
     catch(error){

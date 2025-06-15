@@ -1,12 +1,30 @@
 import React, { useState } from "react";
+import { useNavigate  } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
+  let navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     // Handle login logic here
-    console.log("Email:", email);
+      const response = await fetch("http://localhost:5000/api/auth/checkuser", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email: email})
+    });
+    const json = await response.json();
+    console.log("Email: check", email);
+    console.log(json.action);
+    if(json.action === "signup"){
+      console.log("redirect to signup")
+      navigate("/signup");
+    }
+    if(json.action === "login"){
+      //direct to password page;
+    }
   };
 
   return (
