@@ -7,7 +7,13 @@ const port = process.env.PORT || 5000;
 
 //Middlewares
 app.use(express.json())
-app.use(cors())
+app.use(cors(
+    {
+        origin:['https://amazon-clone-1-zuga.onrender.com'],
+        methods:["POST","GET"],
+        credentials: true
+    }
+));
 
 //Available routes
 app.use('/api/auth', require('./routes/userAuth.js'))
