@@ -1,6 +1,6 @@
 function OtpVerification(){
-    const accountSid = 'ACbcdc353fd04e6115b16219ed2144d6ac';
-    const authToken = 'e589795258a79aa23ceb0ad9458fc0bc';
+    const accountSid = process.env.REACT_APP_ACCOUNT_SIP;
+    const authToken = process.env.REACT_APP_AUTHTOKEN;
     const client = require('twilio')(accountSid, authToken);
     client.messages
         .create({
