@@ -28,7 +28,7 @@ export default function Navbar() {
                 <div className='flex mr-2 space-x-2'>
                     <Link to="/login">
                     <div className="flex text-white items-center font-bold text-sm">
-                        <span>Name</span>
+                        <span>Name hi</span>
                         <span>&gt;</span>
                         <img src={require("../assets/account-32.png")} alt="" className='w-9' />
                     </div>
