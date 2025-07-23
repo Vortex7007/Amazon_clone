@@ -9,51 +9,95 @@ export default function Navbar() {
     }
     return (
         <>
-            {/* top layer container */}
-            <div className="flex justify-between items-center bg-[#232f3e] h-12 font-roboto">
-                <div className='flex '>
-                    <div className="hamburger inline-block p-1.5 md:hidden" onClick={handleClick}>
-                        <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
-                        <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
-                        <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+
+            {/* Responsive Navbar Layout */}
+            <div className="bg-[#1a2233] font-roboto">
+                {/* Mobile: stacked layout */}
+                <div className="flex flex-col lg:hidden">
+                    <div className="flex justify-between items-center h-10">
+                        <div className='flex'>
+                            <div className="hamburger inline-block p-1.5 md:hidden" onClick={handleClick}>
+                                <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+                                <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+                                <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+                            </div>
+                            <div>
+                                <div className='flex flex-col m-2 items-start justify-center'>
+                                    <div className='flex items-end'>
+                                        <img src={require('../assets/amazon_logo.png')} alt="" className='w-[80px] h-auto bg-inherit' />
+                                        <span className='text-white text-sm ml-0 mb-1'>.in</span>
+                                    </div>
+                                    <span className='text-gray-400 font-bold text-xs ml-14 mt-[-10px]'>prime</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex mr-2 space-x-2'>
+                            <Link to="/login">
+                            <div className="flex text-white items-center font-bold text-sm">
+                                <span>Name</span>
+                                <span>&gt;</span>
+                                <img src={require("../assets/account-32.png")} alt="" className='w-9' />
+                            </div>
+                            </Link>
+                            <div>
+                                <img src={require("../assets/cart.png")} alt="" className='w-9' />
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <div className='flex absolute m-2'>
-                            <img src={require('../assets/amazon_logo.png')} alt="" className='w-[80px] height-auto bg-inherit' />
-                            <span className='text-white relative bottom-0 text-sm'>.in</span>
-                            <span className='text-gray-400 font-bold text-sm relative top-3 right-10'>prime</span>
+                    {/* Searchbar below for mobile */}
+                    <div className="flex justify-center px-2 mt-2">
+                        <div className="relative w-full">
+                            <input
+                                type="text"
+                                placeholder="Search Amazon.in"
+                                className="w-full px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none"
+                            />
+                            <button className="absolute right-0 top-0 bottom-0 bg-[#febd69] text-white px-3 rounded-lg">
+                                <img src={require("../assets/search.png")} alt="search" className="w-7 h-7" />
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div className='flex mr-2 space-x-2'>
-                    <Link to="/login">
-                    <div className="flex text-white items-center font-bold text-sm">
-                        <span>Name hi</span>
-                        <span>&gt;</span>
-                        <img src={require("../assets/account-32.png")} alt="" className='w-9' />
+                {/* Desktop: horizontal layout */}
+                <div className="hidden lg:flex justify-between items-center h-12 px-4">
+                    <div className='flex items-center'>
+                        <div className="hamburger inline-block p-1.5 xl:hidden" onClick={handleClick}>
+                            <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+                            <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+                            <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+                        </div>
+                        <div className='flex flex-col m-2 items-start justify-center'>
+                            <div className='flex items-end'>
+                                <img src={require('../assets/amazon_logo.png')} alt="" className='w-[80px] h-auto bg-inherit' />
+                                <span className='text-white text-sm ml-0 mb-1'>.in</span>
+                            </div>
+                            <span className='text-gray-400 font-bold text-xs ml-14 mt-[-10px]'>prime</span>
+                        </div>
                     </div>
-                    </Link>
-                    <div>
-                        <img src={require("../assets/cart.png")} alt="" className='w-9' />
+                    {/* Searchbar in center for desktop */}
+                    <div className="flex-1 flex justify-center mx-8">
+                        <div className="relative w-full max-w-xl">
+                            <input
+                                type="text"
+                                placeholder="Search Amazon.in"
+                                className="w-full px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none"
+                            />
+                            <button className="absolute right-0 top-0 bottom-0 bg-[#febd69] text-white px-3 rounded-lg">
+                                <img src={require("../assets/search.png")} alt="search" className="w-7 h-7" />
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            {/* Searchbar */}
-            <div className="bg-[#232f3e]">
-                <div className="flex justify-center px-2">
-                    <div className="relative w-full">
-                        {/* Input Field */}
-                        <input
-                            type="text"
-                            placeholder="Search Amazon.in"
-                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none"
-                        />
-
-                        {/* Button */}
-                        <button className="absolute right-0 top-0 bottom-0 bg-[#febd69] text-white px-3 rounded-lg">
-                            <img src={require("../assets/search.png")} alt="search" className="w-7 h-7" />
-                        </button>
+                    <div className='flex mr-2 space-x-2'>
+                        <Link to="/login">
+                        <div className="flex text-white items-center font-bold text-sm">
+                            <span>Name</span>
+                            <span>&gt;</span>
+                            <img src={require("../assets/account-32.png")} alt="" className='w-9' />
+                        </div>
+                        </Link>
+                        <div>
+                            <img src={require("../assets/cart.png")} alt="" className='w-9' />
+                        </div>
                     </div>
                 </div>
             </div>

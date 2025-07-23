@@ -8,15 +8,15 @@ const User = require('../models/User')
 //create a new user
 router.post('/createuser',async(req,res)=>{
     try {
-        let user = await User.findOne({ email: req.body.email });
+        let user = await User.findOne({ mobile: req.body.mobile });
         if (user) {
-            return res.status(400).json({error: "sorry a user with this email already exists" });
+            return res.status(400).json({error: "sorry a user with this number already exists" });
         }
         const secPass = await bcrypt.hash(req.body.password, 10);
         user = await User.create({
             name: req.body.name,
             password: secPass,
-            email: req.body.email
+            mobile: req.body.mobile
         })
         res.send(user);
     } catch (error) {
@@ -29,7 +29,7 @@ router.post('/createuser',async(req,res)=>{
 //check if the user exists or not
 router.post('/checkuser', async(req, res)=>{
     try{
-        let user = await User.findOne({ email: req.body.email });
+        let user = await User.findOne({ mobile: req.body.mobile});
         if (!user) {
             return res.status(200).json({action : "signup" ,message: "looks like you are new here please sign up to continue" });
         }

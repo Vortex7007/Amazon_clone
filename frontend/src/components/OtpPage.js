@@ -2,50 +2,57 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function OtpPage() {
-  const [otp, setOtp] = useState("");
+  const [userOtp, setUserOtp] = useState("");
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { mobile, name, password, isNewUser } = location.state || {};
+  // Get values from signup navigate state
+  const { mobile, name, password, otp, isNewUser } = location.state || {};
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
 
-    if (!mobile || !otp) {
+    if (!mobile || !userOtp) {
       alert("Missing data. Please restart signup.");
       return;
     }
 
+    if (userOtp !== otp) {
+      alert("Invalid OTP. Please try again.");
+      return;
+    }
+    
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
+      const response = await fetch("http://localhost:5000/api/auth/createuser", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           mobile,
           name,
           password,
-          otp
-        })
+        }),
       });
 
-      const json = await response.json();
+      const resJson = await response.json();
 
       if (response.ok) {
         alert("Signup successful! Redirecting...");
-        navigate("/"); // or navigate to /login
+        navigate("/login"); // or "/"
       } else {
-        alert(json.error || "OTP verification failed");
+        alert(resJson.error || "Signup failed.");
       }
-    } catch (error) {
-      console.error("Signup failed", error);
-      alert("An error occurred. Try again later.");
+    } catch (err) {
+      console.error("Signup failed", err);
+      alert("Server error. Try again later.");
     }
   };
 
   return (
     <>
+      {/* Logo Header */}
       <div className="flex justify-center items-center bg-[#232f3e] h-14">
         <div className="flex items-center">
           <img
@@ -57,6 +64,7 @@ function OtpPage() {
         </div>
       </div>
 
+      {/* OTP Form Body */}
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="w-full max-w-sm bg-white p-6 rounded shadow-sm">
           <h2 className="text-xl font-semibold mb-4 text-gray-800">
@@ -73,8 +81,8 @@ function OtpPage() {
             <input
               type="text"
               id="otp"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
+              value={userOtp}
+              onChange={(e) => setUserOtp(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               placeholder="6-digit OTP"
               required

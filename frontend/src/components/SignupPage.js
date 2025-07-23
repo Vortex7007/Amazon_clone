@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -9,33 +10,48 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    // Directly navigate to OTP page with user details
-    navigate("/otp", {
-      state: {
-        mobile: `+${phone}`,
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("http://localhost:5000/api/verify/verifyotp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mobile: `+${phone}`, // Ensure E.164 format
         name,
         password,
-        isNewUser: true
-      }
+        isNewUser: true, // if needed by backend
+      }),
     });
-  };
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // Navigate to OTP page with received OTP and user details
+      navigate("/otp", {
+        state: {
+          mobile: `+${phone}`,
+          name,
+          password,
+          isNewUser: true,
+          otp: data.otp, // send received OTP to next page
+        },
+      });
+    } else {
+      alert(data.error || "Failed to send OTP");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("An error occurred. Try again.");
+  }
+};
+
 
   return (
     <>
-      <div className="flex justify-center items-center bg-[#232f3e] h-14">
-        <div className="flex items-center">
-          <img
-            src={require("../assets/amazon_logo.png")}
-            alt="Amazon Logo"
-            className="w-24 h-auto"
-          />
-          <span className="text-white text-sm -ml-2">.in</span>
-        </div>
-      </div>
-
+      <Navbar />
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="w-full max-w-sm bg-white p-6 rounded shadow-sm">
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">

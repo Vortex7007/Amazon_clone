@@ -10,6 +10,7 @@ app.use(express.json())
 app.use(cors());
 
 //Available routes
+app.use('/api/verify', require('./routes/otpfull.js'))
 app.use('/api/auth', require('./routes/userAuth.js'))
 
 app.listen(port,()=>{

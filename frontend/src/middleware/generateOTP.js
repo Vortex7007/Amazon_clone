@@ -1,6 +1,7 @@
+require('dotenv').config();
 function OtpVerification(){
-    const accountSid = process.env.REACT_APP_ACCOUNT_SIP;
-    const authToken = process.env.REACT_APP_AUTHTOKEN;
+    const accountSid = process.env.REACT_APP_ACCOUNT_SID;
+    const authToken = process.env.REACT_APP_AUTH_TOKEN;
     const client = require('twilio')(accountSid, authToken);
     client.messages
         .create({
