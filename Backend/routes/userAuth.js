@@ -31,10 +31,17 @@ router.post('/checkuser', async(req, res)=>{
     try{
         let user = await User.findOne({ mobile: req.body.mobile});
         if (!user) {
-            return res.status(200).json({action : "signup" ,message: "looks like you are new here please sign up to continue" });
+            return res.status(200).json({
+                action : "signup" ,
+                message: "looks like you are new here please sign up to continue" 
+            });
         }
         else{
-            return res.status(200).json({action : "login" , message: "give password" });
+            return res.status(200).json({
+                action : "login" ,
+                message: "give password",
+                userId: user._id
+            });
         }
     }
     catch(error){

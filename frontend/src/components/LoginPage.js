@@ -31,7 +31,7 @@ function LoginPage() {
 
       if (resJson.action === "login") {
         // Step 2: Send OTP
-        const resOtp = await fetch("http://localhost:5000/api/auth/verifyotp", {
+        const resOtp = await fetch("http://localhost:5000/api/verify/verifyotp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -45,6 +45,7 @@ function LoginPage() {
         const otpData = await resOtp.json();
 
         if (resOtp.ok) {
+
           // Step 3: Redirect to OTP page
           navigate("/otp", {
             state: {

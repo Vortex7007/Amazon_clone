@@ -22,8 +22,9 @@ function OtpPage() {
       alert("Invalid OTP. Please try again.");
       return;
     }
-    
-    try {
+    if(isNewUser){
+      // If new user, create account
+      try {
       const response = await fetch("http://localhost:5000/api/auth/createuser", {
         method: "POST",
         headers: {
@@ -48,6 +49,36 @@ function OtpPage() {
       console.error("Signup failed", err);
       alert("Server error. Try again later.");
     }
+    }
+    else{
+      // If existing user, just login
+      try {
+        const response = await fetch("http://localhost:5000/api/verify/login", {
+          method: "POST", 
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            mobile
+          }),
+        });
+
+        const resJson = await response.json();
+
+        if (response.ok) {
+           // Store token in localStorage or context
+          localStorage.setItem("authToken", resJson.authToken);
+          alert("Login successful! Redirecting...");
+          navigate("/"); // or wherever you want to redirect
+        } else {
+          alert(resJson.error || "Login failed.");
+        }
+      } catch (error) {
+        
+      }
+    }
+    
+
   };
 
   return (
