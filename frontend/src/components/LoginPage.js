@@ -15,7 +15,7 @@ function LoginPage() {
       const fullMobile = `+${mobile}`;
 
       // Step 1: Check if user exists
-      const resCheck = await fetch("http://localhost:5000/api/auth/checkuser", {
+      const resCheck = await fetch("https://amazon-clone-yfmi.onrender.com/api/auth/checkuser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mobile: fullMobile }),
@@ -31,7 +31,7 @@ function LoginPage() {
 
       if (resJson.action === "login") {
         // Step 2: Send OTP
-        const resOtp = await fetch("http://localhost:5000/api/verify/verifyotp", {
+        const resOtp = await fetch("https://amazon-clone-yfmi.onrender.com/api/verify/verifyotp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
