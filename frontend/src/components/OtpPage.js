@@ -25,7 +25,7 @@ function OtpPage() {
     if(isNewUser){
       // If new user, create account
       try {
-      const response = await fetch("http://localhost:5000/api/auth/createuser", {
+      const response = await fetch("https://amazon-clone-yfmi.onrender.com/api/auth/createuser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +53,7 @@ function OtpPage() {
     else{
       // If existing user, just login
       try {
-        const response = await fetch("http://localhost:5000/api/verify/login", {
+        const response = await fetch("https://amazon-clone-yfmi.onrender.com/api/verify/login", {
           method: "POST", 
           headers: {
             "Content-Type": "application/json",
