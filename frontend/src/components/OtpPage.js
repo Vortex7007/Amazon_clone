@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function OtpPage() {
+  const backendUrl = process.env.REACT_APP_BACKEND_SERVER_LINK;
   const [userOtp, setUserOtp] = useState("");
 
   const location = useLocation();
@@ -25,7 +26,7 @@ function OtpPage() {
     if(isNewUser){
       // If new user, create account
       try {
-      const response = await fetch("http://localhost:5000/api/auth/createuser", {
+      const response = await fetch(`${backendUrl}/api/auth/createuser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +54,7 @@ function OtpPage() {
     else{
       // If existing user, just login
       try {
-        const response = await fetch("http://localhost:5000/api/verify/login", {
+        const response = await fetch(`${backendUrl}/api/verify/login`, {
           method: "POST", 
           headers: {
             "Content-Type": "application/json",

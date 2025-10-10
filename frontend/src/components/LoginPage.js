@@ -5,6 +5,7 @@ import "react-phone-input-2/lib/style.css";
 import Navbar from "./Navbar";
 
 function LoginPage() {
+  const backendUrl = process.env.REACT_APP_BACKEND_SERVER_LINK;
   const [mobile, setMobile] = useState("");
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ function LoginPage() {
       const fullMobile = `+${mobile}`;
 
       // Step 1: Check if user exists
-      const resCheck = await fetch("http://localhost:5000/api/auth/checkuser", {
+      const resCheck = await fetch(`${backendUrl}/api/auth/checkuser`,{
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mobile: fullMobile }),
@@ -31,7 +32,7 @@ function LoginPage() {
 
       if (resJson.action === "login") {
         // Step 2: Send OTP
-        const resOtp = await fetch("http://localhost:5000/api/verify/verifyotp", {
+        const resOtp = await fetch(`${backendUrl}/api/verify/verifyotp`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

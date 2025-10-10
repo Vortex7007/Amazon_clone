@@ -5,6 +5,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 function SignupPage() {
+  const backendUrl = process.env.REACT_APP_BACKEND_SERVER_LINK;
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +16,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const response = await fetch("http://localhost:5000/api/verify/verifyotp", {
+    const response = await fetch(`${backendUrl}/api/verify/verifyotp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
