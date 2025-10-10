@@ -42,7 +42,7 @@ router.post('/verifyotp',async(req,res)=>{
 
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Some Error Occured");
+        res.status(400).json({ error: "Some Error Occured" });
     }
 
 })
