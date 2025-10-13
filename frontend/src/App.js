@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import OtpPage from './components/OtpPage';
+import AddproductPage from './components/seller/AddproductPage';
 function App() {
   return (
     <><Router>
@@ -27,6 +28,7 @@ function App() {
         <Route exact path='/login' element={<LoginPage />} />
         <Route exact path='/signup' element={<SignupPage />} />
         <Route exact path='/otp' element={<OtpPage />} />
+        <Route exact path='/addproduct' element={<AddproductPage />} />
       </Routes>
     </Router>
     </>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 
 export default function ShortMenu() {
     return (
@@ -11,7 +12,9 @@ export default function ShortMenu() {
                     <span>Category</span>
                     <span>Your Lists</span>
                     <span>Deals</span>
-                    <span>Sell</span>
+                    <Link to="/addproduct">
+                        <span >Sell</span>
+                    </Link>
                 </div>
             </div>
             <div className='text-white flex bg-[#37475a] items-center h-11'>

@@ -1,0 +1,45 @@
+const express = require("express");
+const multer = require("multer");
+const Product = require("../models/Products"); // your mongoose model
+
+const router = express.Router();
+
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // make sure this folder exists
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+// ✅ POST route
+router.post("/addproduct", upload.single("image"), async (req, res) => {
+  try {
+    const { sellerId, name, price, productDescription, about, category } = req.body;
+
+    // Multer puts file info in req.file
+    const imagePath = req.file ? req.file.path : null;
+
+    const newProduct = await Product.create({
+      sellerId,
+      name,
+      price,
+      productDescription,
+      about,
+      category,
+      image: imagePath, // ✅ store image path
+    });
+
+    res.status(201).json({ message: "Product added successfully", product: newProduct });
+  } catch (err) {
+    console.error("Error adding product:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+module.exports = router;
