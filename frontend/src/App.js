@@ -10,6 +10,9 @@ import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import OtpPage from './components/OtpPage';
 import AddproductPage from './components/seller/AddproductPage';
+import SellerLogin from './components/seller/SellerLogin';
+import SellerOtppage from './components/seller/SellerOtppage';
+import SellerSignupPage from './components/seller/SellerSignupPage';
 function App() {
   return (
     <><Router>
@@ -26,8 +29,11 @@ function App() {
             </layout>
           } />
         <Route exact path='/login' element={<LoginPage />} />
+        <Route exact path='/seller' element={<SellerLogin />} />
         <Route exact path='/signup' element={<SignupPage />} />
+        <Route exact path='/sellersignup' element={<SellerSignupPage/>} />
         <Route exact path='/otp' element={<OtpPage />} />
+        <Route exact path='/sellerotp' element={<SellerOtppage />} />
         <Route exact path='/addproduct' element={<AddproductPage />} />
       </Routes>
     </Router>

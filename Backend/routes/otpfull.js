@@ -46,6 +46,31 @@ router.post('/verifyotp',async(req,res)=>{
     }
 
 })
+// otp verification for seller
+router.post('/verifyotpseller',async(req,res)=>{
+    try {
+        const { mobile } = req.body;
+        if (!mobile) {
+            return res.status(400).json({ error: "Missing data. Please restart signup." });
+        }
+        const newotp = generateOTP();
+        // Send OTP via Twilio
+        await client.messages.create({
+            body: `Your OTP is ${newotp}`,
+            to: mobile,
+            from: process.env.TWILIO_PHONE_NUMBER
+        });
+        res.status(200).json({
+            message: "OTP sent successfully",
+            otp: newotp
+        });
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(400).json({ error: "Some Error Occured" });
+    }
+
+})
 router.post('/login', async (req, res) => {
     try {
         const { mobile } = req.body;

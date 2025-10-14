@@ -12,7 +12,7 @@ export default function ShortMenu() {
                     <span>Category</span>
                     <span>Your Lists</span>
                     <span>Deals</span>
-                    <Link to="/addproduct">
+                    <Link to="/seller">
                         <span >Sell</span>
                     </Link>
                 </div>

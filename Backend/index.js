@@ -13,6 +13,7 @@ app.use(cors());
 app.use('/api/verify', require('./routes/otpfull.js'))
 app.use('/api/auth', require('./routes/userAuth.js'))
 app.use('/api/products', require('./routes/products.js'))
+app.use('/api/seller', require('./routes/sellerAuth.js'))
 
 app.listen(port,()=>{
     console.log(`Backend running on port ${port}`)

@@ -21,6 +21,7 @@ export default function Navbar() {
                                 <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
                                 <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
                             </div>
+                            <Link to="/">
                             <div>
                                 <div className='flex flex-col m-2 items-start justify-center'>
                                     <div className='flex items-end'>
@@ -30,6 +31,7 @@ export default function Navbar() {
                                     <span className='text-gray-400 font-bold text-xs ml-14 mt-[-10px]'>prime</span>
                                 </div>
                             </div>
+                            </Link>
                         </div>
                         <div className='flex mr-2 space-x-2'>
                             <Link to="/login">
