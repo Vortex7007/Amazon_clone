@@ -3,7 +3,8 @@ const express =require("express");
 const router = express.Router();
 const twilio = require('twilio');
 const jwt = require("jsonwebtoken");
-const User = require('../models/User')
+const User = require('../models/User');
+const Seller = require('../models/Seller');
 
 //dot env variables
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -71,6 +72,7 @@ router.post('/verifyotpseller',async(req,res)=>{
     }
 
 })
+//login for user
 router.post('/login', async (req, res) => {
     try {
         const { mobile } = req.body;
@@ -98,6 +100,32 @@ router.post('/login', async (req, res) => {
     }
 });
 
-//
+//login for seller
+router.post('/sellerlogin', async (req, res) => {
+    try {
+        const { mobile } = req.body;
+        if (!mobile) {
+            return res.status(400).json({ error: "Missing mobile number." });
+        }
+        let seller = await Seller.findOne({ mobile: mobile });
+        if (!seller) {
+            return res.status(400).json({ error: "User does not exist. Please sign up." });
+        }
+        // Generate OTP
+        // make jwt token:
+        const userId = seller._id;
+        const data = {
+          seller: {
+            id: userId
+          }
+        }
+          const token = jwt.sign( data , process.env.JWT_TOKEN_SECRET, { expiresIn: '30d' });
+        res.status(200).json({success: true, authToken: token});  
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).send("Some Error Occured");
+    }
+});
 
 module.exports = router;

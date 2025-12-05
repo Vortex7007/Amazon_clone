@@ -61,21 +61,28 @@ export default function Navbar() {
                     </div>
                 </div>
                 {/* Desktop: horizontal layout */}
-                <div className="hidden lg:flex justify-between items-center h-12 px-4">
-                    <div className='flex items-center'>
-                        <div className="hamburger inline-block p-1.5 xl:hidden" onClick={handleClick}>
-                            <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
-                            <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
-                            <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
-                        </div>
-                        <div className='flex flex-col m-2 items-start justify-center'>
-                            <div className='flex items-end'>
-                                <img src={require('../assets/amazon_logo.png')} alt="" className='w-[80px] h-auto bg-inherit' />
-                                <span className='text-white text-sm ml-0 mb-1'>.in</span>
-                            </div>
-                            <span className='text-gray-400 font-bold text-xs ml-14 mt-[-10px]'>prime</span>
-                        </div>
-                    </div>
+                {/* Desktop: horizontal layout */}
+<div className="hidden lg:flex justify-between items-center h-12 px-4">
+  <div className='flex items-center'>
+    <div className="hamburger inline-block p-1.5 xl:hidden" onClick={handleClick}>
+      <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+      <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+      <div className="line bg-white h-[2px] w-5 my-1.5 ml-2"></div>
+    </div>
+
+    {/* 🔥 Entire logo is now clickable */}
+    <Link to="/" className="flex flex-col m-2 items-start justify-center cursor-pointer select-none">
+      <div className="flex items-end">
+        <img
+          src={require('../assets/amazon_logo.png')}
+          alt=""
+          className="w-[80px] h-auto bg-inherit"
+        />
+        <span className="text-white text-sm ml-0 mb-1">.in</span>
+      </div>
+      <span className="text-gray-400 font-bold text-xs ml-14 mt-[-10px]">prime</span>
+    </Link>
+  </div>
                     {/* Searchbar in center for desktop */}
                     <div className="flex-1 flex justify-center mx-8">
                         <div className="relative w-full max-w-xl">

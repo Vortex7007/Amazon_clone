@@ -12,7 +12,7 @@ import OtpPage from './components/OtpPage';
 import AddproductPage from './components/seller/AddproductPage';
 import SellerLogin from './components/seller/SellerLogin';
 import SellerOtppage from './components/seller/SellerOtppage';
-import SellerSignupPage from './components/seller/SellerSignupPage';
+import SellerSignupPage from './components/seller/SellerSignupPage'; 
 function App() {
   return (
     <><Router>

@@ -56,8 +56,8 @@ function OtpPage() {
     else{
       // If existing user, just login
       try {
-        const response = await fetch(`${backendUrl}/api/verify/login`, {
-          method: "POST", 
+        const response = await fetch(`${backendUrl}/api/verify/sellerlogin`, {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -68,12 +68,12 @@ function OtpPage() {
 
         const resJson = await response.json();
 
-        if (response.ok) {
+        if(response.ok){
            // Store token in localStorage or context
-          localStorage.setItem("authToken", resJson.authToken);
+          localStorage.setItem("sellerToken", resJson.authToken);
           alert("Login successful! Redirecting...");
-          navigate("/"); // or wherever you want to redirect
-        } else {
+          navigate("/addproduct"); // or wherever you want to redirect
+        }else{
           alert(resJson.error || "Login failed.");
         }
       } catch (error) {
