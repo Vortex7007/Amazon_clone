@@ -25,7 +25,7 @@ import UserProfile from './components/UserProfile';
 import CheckoutPage from './components/CheckoutPage';
 import OrderConfirmation from './components/OrderConfirmation';
 import OrderHistory from './components/OrderHistory';
-
+console.log("Current Backend URL:", process.env.REACT_APP_BACKEND_SERVER_LINK);
 function App() {
   const dispatch = useDispatch();
 
