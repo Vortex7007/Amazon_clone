@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userLoginSuccess } from "../redux/user/userSlice";
 
 function OtpPage() {
   const backendUrl = process.env.REACT_APP_BACKEND_SERVER_LINK;
@@ -7,6 +9,7 @@ function OtpPage() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Get values from signup navigate state
   const { mobile, name, password, otp, isNewUser } = location.state || {};
@@ -55,7 +58,7 @@ function OtpPage() {
       // If existing user, just login
       try {
         const response = await fetch(`${backendUrl}/api/verify/login`, {
-          method: "POST", 
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -67,15 +70,36 @@ function OtpPage() {
         const resJson = await response.json();
 
         if (response.ok) {
-           // Store token in localStorage or context
+          // Store token in localStorage
           localStorage.setItem("authToken", resJson.authToken);
+
+          // Fetch user data and update Redux state
+          try {
+            const userResponse = await fetch(`${backendUrl}/api/auth/user`, {
+              headers: {
+                "auth-token": resJson.authToken,
+              },
+            });
+
+            if (userResponse.ok) {
+              const userData = await userResponse.json();
+              dispatch(userLoginSuccess({
+                token: resJson.authToken,
+                user: userData
+              }));
+            }
+          } catch (userError) {
+            console.error("Failed to fetch user data:", userError);
+          }
+
           alert("Login successful! Redirecting...");
-          navigate("/"); // or wherever you want to redirect
+          navigate("/");
         } else {
           alert(resJson.error || "Login failed.");
         }
       } catch (error) {
-        
+        console.error("Login failed:", error);
+        alert("Login failed. Please try again.");
       }
     }
     

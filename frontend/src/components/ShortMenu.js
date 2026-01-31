@@ -1,7 +1,12 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function ShortMenu() {
+    const { isAuthenticated: sellerAuthenticated } = useSelector((state) => state.seller);
+
+    const sellLink = sellerAuthenticated ? "/seller/dashboard" : "/seller";
+
     return (
         <div className='flex flex-col'>
             <div className='flex flex-col bg-[#232f3e] text-white font-semibold h-11'>
@@ -12,7 +17,7 @@ export default function ShortMenu() {
                     <span>Category</span>
                     <span>Your Lists</span>
                     <span>Deals</span>
-                    <Link to="/seller">
+                    <Link to={sellLink}>
                         <span >Sell</span>
                     </Link>
                 </div>

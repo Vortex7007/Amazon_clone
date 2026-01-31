@@ -1,12 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [userName, setUserName] = useState(null);
+    const [loadingUser, setLoadingUser] = useState(true);
+
+    // Get authentication state from Redux
+    const { isAuthenticated: userAuthenticated } = useSelector((state) => state.user);
+    const { isAuthenticated: sellerAuthenticated } = useSelector((state) => state.seller);
+    const cart = useSelector((state) => state.cart);
+    const cartQuantity = cart?.totalQuantity || 0;
+    const backendUrl = process.env.REACT_APP_BACKEND_SERVER_LINK || "http://localhost:5000";
+
+    // Determine if user is authenticated (either as customer or seller)
+    const isAuthenticated = userAuthenticated || sellerAuthenticated;
+    const isSeller = sellerAuthenticated && !userAuthenticated;
+    
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                setLoadingUser(false);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${backendUrl}/api/auth/user`, {
+                    headers: {
+                        "auth-token": token,
+                    },
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    setUserName(userData.name);
+                } else {
+                    // Token might be invalid, clear it
+                    localStorage.removeItem("authToken");
+                }
+            } catch (err) {
+                console.error("Error fetching user:", err);
+            } finally {
+                setLoadingUser(false);
+            }
+        };
+
+        fetchUser();
+    }, [backendUrl]);
+    
     const handleClick = () => {
         console.log('clicked ham');
         setIsOpen(!isOpen);
     }
+
+    // Determine display name and account link based on authentication type
+    let displayName = "Sign In";
+    let accountLink = "/login";
+
+    if (isSeller) {
+      displayName = "Seller Dashboard";
+      accountLink = "/seller/dashboard";
+    } else if (userName) {
+      displayName = userName;
+      accountLink = "/profile";
+    }
+    
     return (
         <>
 
@@ -34,16 +94,23 @@ export default function Navbar() {
                             </Link>
                         </div>
                         <div className='flex mr-2 space-x-2'>
-                            <Link to="/login">
-                            <div className="flex text-white items-center font-bold text-sm">
-                                <span>Name</span>
-                                <span>&gt;</span>
-                                <img src={require("../assets/account-32.png")} alt="" className='w-9' />
-                            </div>
+                            <Link to={accountLink}>
+                        <div className="flex text-white items-center font-bold text-sm">
+                            <span className="max-w-[100px] truncate">{loadingUser ? "Loading..." : displayName}</span>
+                            <span>&gt</span>
+                            <img src={require("../assets/account-32.png")} alt="" className='w-9' />
+                        </div>
                             </Link>
-                            <div>
-                                <img src={require("../assets/cart.png")} alt="" className='w-9' />
-                            </div>
+                            {!isSeller && (
+                                <Link to="/cart" className="relative">
+                                    <img src={require("../assets/cart.png")} alt="Cart" className='w-9' />
+                                    {cartQuantity > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                            {cartQuantity > 9 ? '9+' : cartQuantity}
+                                        </span>
+                                    )}
+                                </Link>
+                            )}
                         </div>
                     </div>
                     {/* Searchbar below for mobile */}
@@ -97,16 +164,23 @@ export default function Navbar() {
                         </div>
                     </div>
                     <div className='flex mr-2 space-x-2'>
-                        <Link to="/login">
+                        <Link to={accountLink}>
                         <div className="flex text-white items-center font-bold text-sm">
-                            <span>Name</span>
-                            <span>&gt;</span>
+                            <span className="max-w-[100px] truncate">{loadingUser ? "Loading..." : displayName}</span>
+                            <span>&gt</span>
                             <img src={require("../assets/account-32.png")} alt="" className='w-9' />
                         </div>
                         </Link>
-                        <div>
-                            <img src={require("../assets/cart.png")} alt="" className='w-9' />
-                        </div>
+                        {!isSeller && (
+                            <Link to="/cart" className="relative">
+                                <img src={require("../assets/cart.png")} alt="Cart" className='w-9' />
+                                {cartQuantity > 0 && (
+                                    <span className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                        {cartQuantity > 9 ? '9+' : cartQuantity}
+                                    </span>
+                                )}
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

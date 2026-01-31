@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { sellerLoginSuccess } from "../../redux/seller/sellerSlice";
 
 function OtpPage() {
   const backendUrl = process.env.REACT_APP_BACKEND_SERVER_LINK;
@@ -7,6 +9,7 @@ function OtpPage() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Get values from signup navigate state
   const { mobile, companyname, owner, password, otp, isNewUser, operatingcity } = location.state || {};
@@ -69,10 +72,14 @@ function OtpPage() {
         const resJson = await response.json();
 
         if(response.ok){
-           // Store token in localStorage or context
+          // Store token and update Redux state
           localStorage.setItem("sellerToken", resJson.authToken);
+          dispatch(sellerLoginSuccess({
+            token: resJson.authToken,
+            seller: {} // We don't have seller profile endpoint, so empty for now
+          }));
           alert("Login successful! Redirecting...");
-          navigate("/addproduct"); // or wherever you want to redirect
+          navigate("/seller/dashboard"); // Redirect to seller dashboard
         }else{
           alert(resJson.error || "Login failed.");
         }
