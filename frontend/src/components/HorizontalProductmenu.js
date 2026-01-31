@@ -60,7 +60,7 @@ const HorizontalProductmenu = () => {
     );
   }
 
-  return (
+return (
     <div className="overflow-x-auto scrollbar-hide">
       <div className="flex mx-2">
         {products.map((product) => (
@@ -70,11 +70,14 @@ const HorizontalProductmenu = () => {
             className="min-w-[70px] rounded-lg flex flex-col items-center justify-center mt-2 cursor-pointer hover:bg-gray-100 p-2 transition-colors"
           >
             <img
-              src={product.image || "https://via.placeholder.com/50"}
+              // CHANGE 1: Use placehold.co instead of via.placeholder.com
+              src={product.image || "https://placehold.co/50"}
               alt={product.name}
               className="h-full object-cover rounded-md w-12"
+              // CHANGE 2: The fix for the infinite loop
               onError={(e) => {
-                e.target.src = "https://via.placeholder.com/50";
+                e.target.onerror = null; // <--- CRITICAL: This stops the loop
+                e.target.src = "https://placehold.co/50"; // Fallback image
               }}
             />
             <p className="text-center mt-2 text-xs line-clamp-2">{product.name}</p>
