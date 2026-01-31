@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// Get the base URL from the environment, or default to localhost if running locally
+const rootUrl = process.env.REACT_APP_BACKEND_SERVER_LINK || "http://localhost:5000";
+
+// Append /api to it
+const API_BASE_URL = `${rootUrl}/api`;
 
 // Async thunks
 export const createOrder = createAsyncThunk(
