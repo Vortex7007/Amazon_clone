@@ -216,7 +216,7 @@ const SellerDashboard = () => {
                     <div className="p-4">
                       <h3 className="font-bold text-gray-900 mb-2">{product.name}</h3>
                       <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.productDescription}</p>
-                      <p className="text-lg font-bold text-gray-900 mb-3">${product.price}</p>
+                      <p className="text-lg font-bold text-gray-900 mb-3">₹{product.price}</p>
 
                       <div className="flex space-x-2">
                         <button
@@ -251,7 +251,7 @@ const SellerDashboard = () => {
                   <div className="text-2xl mr-3">💰</div>
                   <div>
                     <p className="text-sm text-gray-600">Total Sales</p>
-                    <p className="text-2xl font-bold text-gray-900">${analytics.totalSales.toFixed(2)}</p>
+                    <p className="text-2xl font-bold text-gray-900">₹{(analytics.totalSales || 0).toFixed(2)}</p>
                   </div>
                 </div>
               </div>
@@ -261,7 +261,7 @@ const SellerDashboard = () => {
                   <div className="text-2xl mr-3">📦</div>
                   <div>
                     <p className="text-sm text-gray-600">Total Orders</p>
-                    <p className="text-2xl font-bold text-gray-900">{analytics.totalOrders}</p>
+                    <p className="text-2xl font-bold text-gray-900">{analytics.totalOrders || 0}</p>
                   </div>
                 </div>
               </div>
@@ -271,7 +271,7 @@ const SellerDashboard = () => {
                   <div className="text-2xl mr-3">🛒</div>
                   <div>
                     <p className="text-sm text-gray-600">Products Sold</p>
-                    <p className="text-2xl font-bold text-gray-900">{analytics.totalProductsSold}</p>
+                    <p className="text-2xl font-bold text-gray-900">{analytics.totalProductsSold || 0}</p>
                   </div>
                 </div>
               </div>
@@ -281,7 +281,7 @@ const SellerDashboard = () => {
                   <div className="text-2xl mr-3">📊</div>
                   <div>
                     <p className="text-sm text-gray-600">Total Products</p>
-                    <p className="text-2xl font-bold text-gray-900">{analytics.totalProducts}</p>
+                    <p className="text-2xl font-bold text-gray-900">{analytics.totalProducts || 0}</p>
                   </div>
                 </div>
               </div>
@@ -290,7 +290,7 @@ const SellerDashboard = () => {
             {/* Top Selling Products */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4">Top Selling Products</h3>
-              {analytics.productSales.length === 0 ? (
+              {!analytics.productSales || analytics.productSales.length === 0 ? (
                 <p className="text-gray-600">No sales data yet</p>
               ) : (
                 <div className="space-y-3">
@@ -300,7 +300,7 @@ const SellerDashboard = () => {
                         <p className="font-medium text-gray-900">{product.name}</p>
                         <p className="text-sm text-gray-600">Sold: {product.sold} units</p>
                       </div>
-                      <p className="font-bold text-gray-900">${product.revenue.toFixed(2)}</p>
+                      <p className="font-bold text-gray-900">₹{(product.revenue || 0).toFixed(2)}</p>
                     </div>
                   ))}
                 </div>
@@ -338,16 +338,16 @@ const SellerDashboard = () => {
 
                     <div className="mb-4">
                       <h4 className="font-medium text-gray-900 mb-2">Items:</h4>
-                      {order.items.map((item, index) => (
+                      {order.items && order.items.map((item, index) => (
                         <div key={index} className="flex justify-between items-center py-1">
                           <span className="text-sm">{item.name} (x{item.quantity})</span>
-                          <span className="text-sm font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                          <span className="text-sm font-medium">₹{((item.price || 0) * item.quantity).toFixed(2)}</span>
                         </div>
                       ))}
                       <div className="border-t pt-2 mt-2">
                         <div className="flex justify-between font-bold">
                           <span>Total:</span>
-                          <span>${order.sellerTotal.toFixed(2)}</span>
+                          <span>₹{(order.sellerTotal || 0).toFixed(2)}</span>
                         </div>
                       </div>
                     </div>

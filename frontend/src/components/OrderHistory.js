@@ -151,7 +151,7 @@ const OrderHistory = () => {
 
                     <div className="lg:text-right">
                       <div className="mb-2">
-                        <p className="text-2xl font-bold text-gray-900">${order.totalAmount.toFixed(2)}</p>
+                        <p className="text-2xl font-bold text-gray-900">₹{order.totalAmount.toFixed(2)}</p>
                         <p className="text-sm text-gray-600">{order.items.length} item{order.items.length !== 1 ? 's' : ''}</p>
                       </div>
                       <button

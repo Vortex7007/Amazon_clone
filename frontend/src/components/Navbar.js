@@ -94,10 +94,10 @@ export default function Navbar() {
                             </Link>
                         </div>
                         <div className='flex mr-2 space-x-2'>
-                            <Link to={accountLink}>
+                        <Link to={accountLink}>
                         <div className="flex text-white items-center font-bold text-sm">
                             <span className="max-w-[100px] truncate">{loadingUser ? "Loading..." : displayName}</span>
-                            <span>&gt</span>
+                            <span>{">"}</span>
                             <img src={require("../assets/account-32.png")} alt="" className='w-9' />
                         </div>
                             </Link>
@@ -167,7 +167,7 @@ export default function Navbar() {
                         <Link to={accountLink}>
                         <div className="flex text-white items-center font-bold text-sm">
                             <span className="max-w-[100px] truncate">{loadingUser ? "Loading..." : displayName}</span>
-                            <span>&gt</span>
+                            <span>{">"}</span>
                             <img src={require("../assets/account-32.png")} alt="" className='w-9' />
                         </div>
                         </Link>
