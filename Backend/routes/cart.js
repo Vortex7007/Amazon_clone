@@ -52,8 +52,8 @@ router.get("/", authenticateUser, async (req, res) => {
     // Helper function to get image URL
     const getImageUrl = (imagePath) => {
       if (!imagePath) return null;
-      const protocol = req.protocol;
-      const host = req.get('host');
+      const protocol = req.get('x-forwarded-proto') || req.protocol;
+      const host = req.get('x-forwarded-host') || req.get('host');
       return `${protocol}://${host}/${imagePath}`;
     };
 

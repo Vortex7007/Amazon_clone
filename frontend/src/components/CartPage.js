@@ -179,6 +179,8 @@ const CartPage = () => {
 
   const items = cart.items || [];
   const totalAmount = cart.totalAmount || 0;
+  const shippingCharge = totalAmount >= 500 ? 0 : 80;
+  const finalTotal = totalAmount + shippingCharge;
 
   if (items.length === 0) {
     return (
@@ -310,12 +312,21 @@ const CartPage = () => {
                   </div>
                   <div className="flex justify-between text-gray-600">
                     <span>Shipping</span>
-                    <span className="text-green-600">Free</span>
+                    {shippingCharge === 0 ? (
+                      <span className="text-green-600">Free</span>
+                    ) : (
+                      <span>₹{shippingCharge.toLocaleString("en-IN")}</span>
+                    )}
                   </div>
+                  {shippingCharge > 0 && totalAmount > 0 && (
+                    <div className="text-sm text-green-600">
+                      Add ₹{(500 - totalAmount).toLocaleString("en-IN")} more for free shipping!
+                    </div>
+                  )}
                   <div className="border-t border-gray-200 pt-3">
                     <div className="flex justify-between text-lg font-bold text-gray-900">
                       <span>Total</span>
-                      <span>₹{totalAmount.toLocaleString("en-IN")}</span>
+                      <span>₹{finalTotal.toLocaleString("en-IN")}</span>
                     </div>
                   </div>
                 </div>
